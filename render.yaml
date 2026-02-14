@@ -1,0 +1,34 @@
+# Render Blueprint pour Credit Scoring API
+
+services:
+  # Service Web API
+  - type: web
+    name: credit-scoring-api
+    env: docker
+    plan: free  # Changez en 'starter' pour un plan payant
+    dockerfilePath: ./Dockerfile
+
+    # Variables d'environnement
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.10
+      - key: PORT
+        value: 8000
+      - key: PYTHONUNBUFFERED
+        value: 1
+
+    # Configuration du service
+    healthCheckPath: /
+
+    # Auto-deploy sur push vers main
+    autoDeploy: true
+
+    # Région (changez selon votre préférence)
+    region: oregon  # Options: oregon, frankfurt, singapore
+
+    # Ressources
+    numInstances: 1
+
+    # Domaine personnalisé (optionnel)
+    # domains:
+    #   - credit-scoring-api.yourdomain.com

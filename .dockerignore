@@ -1,0 +1,61 @@
+# Git
+.git
+.gitignore
+.github
+
+# Python
+__pycache__
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.venv
+
+# Tests
+tests/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+junit.xml
+coverage.xml
+
+# Documentation
+*.md
+docs/
+presentation/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Logs
+*.log
+mlruns/
+
+# Jupyter
+*.ipynb
+.ipynb_checkpoints
+notebooks/
+
+# Build
+build/
+dist/
+*.egg-info
+
+# Other
+.DS_Store
+shap_beeswarm.png
+
+# Keep only necessary files for production
+!requirements.txt
+!src/
+!api/
+!models/
+!Dockerfile*
+!*.sh
