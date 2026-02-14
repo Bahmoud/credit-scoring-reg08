@@ -7,9 +7,13 @@
 
 \f0\fs24 \cf0 streamlit\
 pandas
+numpy
 scikit-learn
-mlflow
-shap
 matplotlib
+shap
+mlflow
+joblib
+streamlit
 fastapi
 uvicorn
+
