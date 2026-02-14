@@ -3,11 +3,11 @@
 ## Objectif du projet
 Ce projet vise à construire un système de **scoring de crédit automatisé** capable de :
 
-- estimer la probabilité de défaut d’un client
-- aider à la décision d’octroi de crédit
-- expliquer la décision du modèle (interprétabilité)
-- proposer une interface utilisateur simple
-- exposer le modèle via une API
+- estimer la probabilité de défaut d’un client  
+- aider à la décision d’octroi de crédit  
+- expliquer la décision du modèle (interprétabilité)  
+- proposer une interface utilisateur simple (dashboard Streamlit)  
+- exposer le modèle via une API FastAPI  
 - suivre et versionner les expérimentations ML avec **MLflow**
 
 Le projet suit une démarche complète de **Data Science** et **MLOps**.
@@ -33,35 +33,13 @@ Le modèle prédit donc :
 
 ## Jeux de données utilisés
 
-Les données proviennent du projet **Home Credit Default Risk**.
+Les données proviennent du projet **Home Credit Default Risk**.  
+Lien : [Google Drive](https://drive.google.com/drive/folders/1C_ic7Qp8Vti6A2I3IxGifAXiWKHQJMbt?usp=sharing)
 
-### 1️ application_train
-Informations principales sur les clients :
-- caractéristiques personnelles
-- informations financières
-- informations de crédit
-
-➡ Dataset principal du modèle.
-
-### 2️ bureau
-Historique de crédits du client auprès d’autres institutions.
-
-Exemples d’informations :
-- crédits passés
-- statut des crédits
-- montants empruntés
-
-➡ Permet d’évaluer le comportement financier historique.
-
-### 3️ bureau_balance
-Historique mensuel des crédits du dataset bureau.
-
-➡ Permet d’observer l’évolution du comportement de remboursement dans le temps.
-
-### 4️ previous_application
-Historique des anciennes demandes de crédit du client.
-
-➡ Permet d’évaluer l’expérience passée avec les prêts.
+- **application_train** : caractéristiques personnelles, financières et de crédit  
+- **bureau** : historique des crédits passés  
+- **bureau_balance** : évolution mensuelle des crédits  
+- **previous_application** : demandes de crédit antérieures  
 
 ---
 
@@ -75,74 +53,74 @@ Les étapes réalisées :
 ✔ encodage des variables catégorielles  
 ✔ normalisation si nécessaire  
 
-Exemple :
-- agrégation de l’historique de crédit  
-- création d’indicateurs de stabilité financière  
-- création de variables de comportement client
+Exemples : agrégation historique, indicateurs de stabilité financière, variables de comportement client.
 
 ---
 
 ## Modélisation
 
 ### Modèles testés
-Plusieurs modèles ont été évalués pour comparer les performances.
+- Régression logistique  
+- Random Forest  
+- Gradient Boosting (**modèle retenu**)  
 
-Le modèle retenu est :
-
-**Gradient Boosting**
-
-Pourquoi ce choix :
-- bonnes performances sur données tabulaires
-- gestion des relations non linéaires
-- robuste aux variables nombreuses
+**Gradient Boosting** choisi pour :  
+- bonnes performances sur données tabulaires  
+- gestion des relations non linéaires  
+- robustesse aux variables nombreuses  
 - bon compromis biais / variance
 
 ---
 
 ## Pipeline Machine Learning
 
-Le projet utilise un pipeline complet :
+**Prétraitement → Transformation → Modèle → Prédiction**
 
-Prétraitement → Transformation → Modèle → Prédiction
-
-Avantages :
+Avantages :  
 ✔ reproductibilité  
 ✔ cohérence entre entraînement et prédiction  
 ✔ déploiement simplifié  
-✔ suivi complet via **MLflow**  
+✔ suivi complet via **MLflow**
 
 ### Suivi avec MLflow
-- Toutes les expérimentations sont **loggées automatiquement** :
-  - métriques (Accuracy, AUC, etc.)
-  - paramètres du modèle
-  - artefacts (graphiques, SHAP plots)
-- Permet de comparer facilement différentes versions du modèle
-- Garantit la **traçabilité** et la **reproductibilité**
+- Log des métriques (Accuracy, AUC, etc.), paramètres et artefacts (plots SHAP)  
+- Comparaison facile des versions  
+- Traçabilité et reproductibilité  
 
-Le pipeline final est sauvegardé dans :
-
-`models/credit_scoring_model.pkl`
+Le modèle final est sauvegardé dans : `models/credit_scoring_model.pkl`
 
 ---
 
-## Interprétabilité du modèle (Explainable AI)
+## API et Dashboard
 
-Le projet intègre un mécanisme d’explication des décisions du modèle.
+- **API FastAPI** pour exposer le modèle  
+- **Dashboard Streamlit** pour simuler les clients, afficher prédictions et explications SHAP  
 
-Nous utilisons la méthode **SHAP (Shapley Additive Explanations)**, qui permet de :
+### Exemple d’URL API Render :  
+```text
+https://credit-scoring-reg08-1.onrender.com/predict
 
-✔ identifier les variables qui influencent la décision  
-✔ mesurer l’impact de chaque variable  
-✔ expliquer individuellement chaque prédiction  
-✔ rendre la décision compréhensible pour un utilisateur non technique  
+## Configuration pour exécution locale
 
-L’API retourne :
-- la probabilité de défaut
-- la décision de crédit
-- les principaux facteurs explicatifs
+1 Cloner le dépôt :
 
-Ces explications sont affichées directement dans le dashboard utilisateur sous forme de facteurs qui :
-- augmentent le risque  
-- réduisent le risque  
+ git clone <git@github.com:Bahmoud/credit-scoring-reg08.git>
+cd Projet-ML-Credit-Scoring
 
-Cette approche permet de rendre le système de scoring **transparent et interprétable**.
+2 Créer et activer un environnement Python :
+
+python -m venv venv
+source venv/bin/activate  # Mac/Linux
+venv\Scripts\activate     # Windows
+
+ 3 Installer les dépendances :
+ pip install -r requirements.txt
+
+4 Lancer l’API :
+
+uvicorn api.main:app --host 0.0.0.0 --port 8001
+
+5 Lancer le dashboard :
+
+streamlit run dashboard/app.py
+
