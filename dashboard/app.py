@@ -116,7 +116,7 @@ def niveau_risque(proba: float) -> str:
 # ======================
 # URL DE L’API (à remplacer par celle de Render ou autre)
 # ======================
-API_URL = "https://credit-scoring-reg08-1.onrender.com/"
+API_URL = "https://credit-scoring-reg08-1.onrender.com/predict"
 
 # ======================
 # PREDICTION VIA API
