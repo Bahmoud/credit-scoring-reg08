@@ -199,9 +199,9 @@ if st.button("Analyser le risque"):
                     nom_client = TRADUCTION_FEATURES.get(nom_tech, "Facteur du dossier")
                     impact = f["impact"]
                     if impact < 0:
-                        st.success(f"✔ {nom_client} améliore la fiabilité")
+                        st.markdown(f'<p style="color:#00ff87; font-weight:bold;">✔ {nom_client} améliore la fiabilité</p>', unsafe_allow_html=True)
                     else:
-                        st.warning(f"⚠ {nom_client} augmente le niveau de risque")
+                        st.markdown(f'<p style="color:#ff4d4d; font-weight:bold;">⚠ {nom_client} augmente le niveau de risque</p>', unsafe_allow_html=True)
             else:
                 st.info("Aucune explication disponible.")
 
