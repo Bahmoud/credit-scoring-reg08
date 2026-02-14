@@ -1,4 +1,4 @@
-DATA_PATH = "data/application_train_clean.csv"
+DATA_PATH = "../data/data_fe.csv"
 TARGET = "TARGET"
 
 TEST_SIZE = 0.2
