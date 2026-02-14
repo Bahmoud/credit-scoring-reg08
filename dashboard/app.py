@@ -11,23 +11,51 @@ st.set_page_config(page_title="Credit Scoring", layout="centered")
 # ======================
 st.markdown("""
 <style>
+
+/* ===== Fond global ===== */
 .stApp {
     background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
     color: white;
 }
+
+/* ===== Carte principale ===== */
 .main {
     background: rgba(255,255,255,0.04);
     padding: 30px;
     border-radius: 15px;
 }
-h1, h2, h3 {
-    color: white;
+
+/* ===== Titres ===== */
+h1, h2, h3, label {
+    color: white !important;
 }
-.stNumberInput input, .stSelectbox div {
-    background-color: rgba(255,255,255,0.08);
-    color: white;
-    border-radius: 10px;
+
+/* ===== Inputs numériques lisibles ET éditables ===== */
+.stNumberInput > div > div > input {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+    color: #ffffff !important;
+    border-radius: 10px !important;
+    border: 1px solid rgba(255,255,255,0.25) !important;
+    padding: 0.4rem 0.6rem !important;
 }
+
+.stNumberInput > div > div > input:focus {
+    border: 1px solid #00ff87 !important;
+    box-shadow: 0 0 0 1px #00ff87 !important;
+}
+
+.stNumberInput > div > div > input::placeholder {
+    color: #cbd5e1 !important;
+}
+
+/* ===== Selectbox ===== */
+.stSelectbox div {
+    background-color: rgba(15, 23, 42, 0.85) !important;
+    color: white !important;
+    border-radius: 10px !important;
+}
+
+/* ===== Bouton ===== */
 .stButton button {
     background: linear-gradient(90deg, #00ff87, #60efff);
     border-radius: 12px;
@@ -39,10 +67,12 @@ h1, h2, h3 {
     width: 100%;
     transition: 0.3s;
 }
+
 .stButton button:hover {
     transform: scale(1.03);
     box-shadow: 0px 0px 20px #00ff87;
 }
+
 </style>
 """, unsafe_allow_html=True)
 
@@ -75,6 +105,7 @@ AMT_GOODS_PRICE = st.number_input("Valeur du bien financé", 10000, 2000000, 450
 # ======================
 age = st.slider("Âge du client", 18, 70, 35)
 anciennete = st.slider("Ancienneté professionnelle (années)", 0, 40, 5)
+
 col3, col4 = st.columns(2)
 with col3:
     statut_familial = st.selectbox("Situation familiale", ["Célibataire", "Marié"])
@@ -83,6 +114,7 @@ with col4:
         "Profession du client",
         ["Cadre / Employé", "Indépendant", "Salarié manuel (ouvrier)", "Autre"]
     )
+
 married_value = 1 if statut_familial == "Marié" else 0
 laborer_value = 1 if profession == "Salarié manuel (ouvrier)" else 0
 
@@ -114,7 +146,7 @@ def niveau_risque(proba: float) -> str:
         return "Élevé"
 
 # ======================
-# URL DE L’API (à remplacer par celle de Render ou autre)
+# URL API RENDER
 # ======================
 API_URL = "https://credit-scoring-reg08-1.onrender.com/predict"
 
@@ -142,7 +174,7 @@ if st.button("Analyser le risque"):
     }
 
     try:
-        response = requests.post(API_URL, json=data, timeout=10)
+        response = requests.post(API_URL, json=data, timeout=15)
 
         if response.status_code != 200:
             st.error("Erreur côté API")
