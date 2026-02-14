@@ -114,6 +114,11 @@ def niveau_risque(proba: float) -> str:
         return "Élevé"
 
 # ======================
+# URL DE L’API (à remplacer par celle de Render ou autre)
+# ======================
+API_URL = "https://credit-scoring-reg08-1.onrender.com/"
+
+# ======================
 # PREDICTION VIA API
 # ======================
 if st.button("Analyser le risque"):
@@ -137,11 +142,7 @@ if st.button("Analyser le risque"):
     }
 
     try:
-        response = requests.post(
-            "http://127.0.0.1:8001/predict",
-            json=data,
-            timeout=10
-        )
+        response = requests.post(API_URL, json=data, timeout=10)
 
         if response.status_code != 200:
             st.error("Erreur côté API")
