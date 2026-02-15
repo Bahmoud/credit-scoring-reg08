@@ -98,6 +98,8 @@ Le modèle final est sauvegardé dans : `models/credit_scoring_model.pkl`
 
 ### Exemple d’URL API Render :  
 ```text
+Lien de l'app deployée : https://credit-scoring-g-8-2026.streamlit.app/
+
 https://credit-scoring-reg08-1.onrender.com/predict
 
 ## Configuration pour exécution locale
